@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'foursquare' => [
+        'authorization' => env('FOURSQUARE_AUTHORIZATION'),
+        'base_url' => env('FOURSQUARE_BASE_URL'),
+    ],
+
+    'openweathermap' => [
+        'appid' => env('OPENWEATHERMAP_APPID'),
+        'base_url' => env('OPENWEATHERMAP_BASE_URL'),
+    ],
 ];

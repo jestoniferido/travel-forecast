@@ -1,23 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { ongoingRequests } from '@/services/axios-instance'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/place',
+      name: 'place',
+      component: () => import('../views/PlaceList.vue')
+    },
+    {
+      path: '/place/:location/:id',
+      name: 'place-detail',
+      component: () => import('../views/PlaceDetail.vue')
+    },
+    {
+      path: '/related-place/:location/:id/:related',
+      name: 'related-place-detail',
+      component: () => import('../views/RelatedPlaceDetail.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  ongoingRequests.forEach((req) => req.cancel('Request canceled!'))
+
+  next()
 })
 
 export default router
